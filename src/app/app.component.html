@@ -1,0 +1,70 @@
+<mat-toolbar color="primary">
+    <span>Gimnasio&nbsp;<mat-icon>fitness_center</mat-icon></span>
+</mat-toolbar>
+
+<form [formGroup]="datosUsuario">
+  <br><h3>Datos de socio:</h3>
+  <div id="salirModificar" hidden="true">
+    <button mat-stroked-button color="accent" (click)="salirModificar()">Salir modo modificar</button><br><br>
+  </div>
+  <mat-form-field>
+    <input matInput id="nombre" type="text" placeholder="Nombre" required formControlName="nombre">
+    <mat-error *ngIf="datosUsuario.get('nombre')!.hasError('required')">El campo Nombre es obligatorio</mat-error>
+    <mat-error *ngIf="datosUsuario.get('nombre')!.hasError('minlength')">El nombre deben tener mínimo 3 caracteres</mat-error>
+  </mat-form-field>
+  <br><br>
+  <mat-form-field>
+    <input matInput type="text" placeholder="Apellidos" required formControlName="apellidos">
+    <mat-error *ngIf="datosUsuario.get('apellidos')!.hasError('required')">El campo Apellidos es obligatorio</mat-error>
+    <mat-error *ngIf="datosUsuario.get('apellidos')!.hasError('minlength')">Los apellidos deben tener mínimo 3 caracteres</mat-error>
+  </mat-form-field>
+  <br><br>
+  <mat-form-field>
+    <mat-label>Socio</mat-label>
+    <input matInput type="text" required formControlName="numeroSocio">
+    <mat-error *ngIf="datosUsuario.get('numeroSocio')!.hasError('required')">El campo Socio es obligatorio</mat-error>
+    <mat-error *ngIf="datosUsuario.get('numeroSocio')!.hasError('pattern')">El Socio debe ser un número</mat-error>
+  </mat-form-field>
+  <br><br>
+  <mat-form-field>
+    <input matInput type="text" placeholder="DNI" required formControlName="dni">
+    <mat-error *ngIf="datosUsuario.get('dni')!.hasError('required')">El campo DNI es obligatorio</mat-error>
+    <mat-error *ngIf="datosUsuario.get('dni')!.hasError('pattern')">El DNI no tiene el formato correcto (letra DNI mayúscula)</mat-error>
+  </mat-form-field>
+  <br><br>
+  <mat-form-field>
+    <input matInput type="tel" placeholder="Teléfono" required formControlName="telefono">
+    <mat-icon matSuffix>phone</mat-icon>
+    <mat-error *ngIf="datosUsuario.get('telefono')!.hasError('required')">El campo Teléfono es obligatorio</mat-error>
+    <mat-error *ngIf="datosUsuario.get('telefono')!.hasError('pattern')">Revise el formato del número de teléfono introducido</mat-error>
+  </mat-form-field>
+  <br><br>
+  <mat-radio-group formControlName="sexo" required>
+    <mat-label>Sexo</mat-label>
+    <mat-radio-button color="primary" *ngFor="let sexo of tipoSexo" [value]="sexo">
+      {{sexo}}
+    </mat-radio-button>
+  </mat-radio-group>
+  <br><br>
+  <button mat-raised-button color="primary" (click)="registrar()" [disabled]="!datosUsuario.valid">Registrar</button>
+</form>
+
+  <div class="list">
+    <br><br>
+    <h3>Registro de socios</h3>
+    <mat-list>
+      <mat-list-item *ngFor="let item of socios; let indice=index">
+        <mat-icon matListIcon>account_circle</mat-icon>
+        <h2 matLine>{{item.getNombre()}} {{item.getApellidos()}} {{item.getNumeroSocio()}}
+          {{item.getDNI()}} {{item.getTelefono()}} {{item.getSexo()}}
+        </h2>
+        <button mat-raised-button color="primary" (click)="modificar(indice)">Modificar</button>
+        <button mat-raised-button color="warn" (click)="eliminar(indice)">Eliminar</button>
+      </mat-list-item>
+    </mat-list>
+  </div>
+
+<footer>
+  <p>&copy; Curso Bejob Samsung Desarrolladoras - Marina Gómez Trapero</p>
+</footer>
+
